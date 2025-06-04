@@ -5,7 +5,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-function PostScrollList() {
+type Props = {
+  deletedIds: number[];
+};
+
+function PostScrollList({ deletedIds }: Props) {
   const router = useRouter();
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -49,17 +53,20 @@ function PostScrollList() {
 
   return (
     <div className="space-y-4">
-      {data?.pages.flat().map((post) => (
-        <div key={post.id} className="p-4 border rounded shadow-sm bg-white">
-          <button
-            className="font-semibold text-lg text-left cursor-pointer text-gray-900 hover:text-blue-600 transition-all duration-200"
-            onClick={() => router.push(`/posts/${post.id}`)}
-          >
-            {post.title}
-          </button>
-          <p className="text-sm text-gray-600">{post.body}</p>
-        </div>
-      ))}
+      {data?.pages
+        .flat()
+        .filter((post) => !deletedIds.includes(post.id))
+        .map((post) => (
+          <div key={post.id} className="p-4 border rounded shadow-sm bg-white">
+            <button
+              className="font-semibold text-lg text-left cursor-pointer text-gray-900 hover:text-blue-600 transition-all duration-200"
+              onClick={() => router.push(`/posts/${post.id}`)}
+            >
+              {post.title}
+            </button>
+            <p className="text-sm text-gray-600">{post.body}</p>
+          </div>
+        ))}
       <div ref={bottomRef} className="h-10" />
       {isFetchingNextPage && <p>Loading more...</p>}
       {!hasNextPage && (

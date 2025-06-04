@@ -3,10 +3,16 @@
 import PostButtonList from "@/components/PostButtonList";
 import PostScrollList from "@/components/PostScrollList";
 import ToggleButton from "@/components/ToggleButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function PostListPage() {
   const [isOnScrollMode, setIsOnScrollMode] = useState(false);
+  const [deletedIds, setDeletedIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("deletedPostIds");
+    if (saved) setDeletedIds(JSON.parse(saved));
+  }, []);
 
   return (
     <div className="p-6">
@@ -19,7 +25,11 @@ function PostListPage() {
           <ToggleButton value={isOnScrollMode} onToggle={setIsOnScrollMode} />
         </div>
       </div>
-      {isOnScrollMode ? <PostScrollList /> : <PostButtonList />}
+      {isOnScrollMode ? (
+        <PostScrollList deletedIds={deletedIds} />
+      ) : (
+        <PostButtonList deletedIds={deletedIds} />
+      )}
     </div>
   );
 }

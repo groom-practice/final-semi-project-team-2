@@ -5,7 +5,11 @@ import React from "react";
 import Link from "next/link";
 import { fetchPosts } from "@/lib/fakePostsApi";
 
-function PostButtonList() {
+type Props = {
+  deletedIds: number[];
+};
+
+function PostButtonList({ deletedIds }: Props) {
   const {
     data,
     fetchNextPage,
@@ -29,18 +33,21 @@ function PostButtonList() {
 
   return (
     <div className="space-y-4 bg-gray-100 p-4 rounded shadow h-full overflow-y-auto">
-      {data?.pages.flat().map((post) => (
-        <div key={post.id} className="p-4 bg-white rounded shadow-sm">
-          <Link
-            href={`/posts/${post.id}`}
-            className="font-semibold text-lg text-left cursor-pointer text-gray-900 hover:text-blue-600 transition-all duration-200"
-          >
-            {post.title}
-          </Link>
+      {data?.pages
+        .flat()
+        .filter((post) => !deletedIds.includes(post.id))
+        .map((post) => (
+          <div key={post.id} className="p-4 bg-white rounded shadow-sm">
+            <Link
+              href={`/posts/${post.id}`}
+              className="font-semibold text-lg text-left cursor-pointer text-gray-900 hover:text-blue-600 transition-all duration-200"
+            >
+              {post.title}
+            </Link>
 
-          <p className="text-sm text-gray-600">{post.body}</p>
-        </div>
-      ))}
+            <p className="text-sm text-gray-600">{post.body}</p>
+          </div>
+        ))}
 
       {hasNextPage && (
         <button
