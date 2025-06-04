@@ -26,12 +26,7 @@ export default function PhotoSlides({ data }: { data: ImageProps[] }) {
         <SwiperSlide key={v.id}>
           <div style={{ height: "80vh" }}>
             <Link href={`/photos/${v.id}`}>
-              <Image
-                src={v.download_url}
-                width={v.width}
-                height={v.height}
-                alt={v.author}
-              />
+              <Image src={v.download_url} fill alt={v.author} />
             </Link>
           </div>
         </SwiperSlide>
