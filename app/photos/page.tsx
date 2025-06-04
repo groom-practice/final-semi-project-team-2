@@ -1,24 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-
-interface Photo {
-  id: string;
-  author: string;
-  width: number;
-  height: number;
-  url: string;
-  download_url: string;
-}
+import { ImageProps } from "@/types/photos";
+import { getPhotos } from "@/lib/PhotoApi";
 
 export default async function Page(){
-  const response = await fetch("https://picsum.photos/v2/list");
-  if(!response.ok){
-    return(
-      notFound()
-    )
-  }
-  const photos = (await response.json()) as Photo[];
+  const response = await getPhotos();
+  const photos = response.data as ImageProps[];
 
   return(
     <div className="grid grid-cols-3 grid-rows-1 place-items-center gap-4 p-6">
