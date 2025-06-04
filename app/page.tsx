@@ -6,7 +6,6 @@ export default async function Home() {
   const all = await getPhotos();
   const shuffle = all.data.sort(() => Math.random() - 0.5);
   const data = shuffle.slice(0, 5);
-  console.log(data);
 
   return (
     <div className="items-center p-8">
