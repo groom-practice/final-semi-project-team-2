@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -11,14 +12,34 @@ export default function Login() {
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
 
+  const getUsersFromLocal = () => {
+    const usersJSON = localStorage.getItem("users") || "[]";
+    try {
+      return JSON.parse(usersJSON) as {
+        id: string;
+        pw: string;
+        name: string;
+      }[];
+    } catch {
+      return [];
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (id === "team2" && pw === "1234") {
-      login();
-      router.push("/");
-    } else {
-      setError("아이디 또는 비밀번호가 올바르지 않습니다.");
+
+    const users = getUsersFromLocal();
+    const foundUser = users.find((user) => user.id === id);
+    if (!foundUser) {
+      setError("등록되지 않은 아이디입니다.");
+      return;
     }
+    if (foundUser.pw !== pw) {
+      setError("비밀번호가 올바르지 않습니다.");
+      return;
+    }
+    login();
+    router.push("/");
   };
 
   return (
@@ -52,6 +73,15 @@ export default function Login() {
             로그인
           </button>
         </form>
+        <div className="text-center mt-4">
+          <span>계정이 없으신가요? </span>
+          <Link
+            href="/signup"
+            className=" ml-[10px] text-blue-500 hover:underline"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
     </>
   );
