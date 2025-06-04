@@ -13,7 +13,6 @@ export default function Login() {
   const login = useAuthStore((state) => state.login);
 
   const getUsersFromLocal = () => {
-    // 로컬스토리지 'users' 키에 저장된 JSON 문자열을 파싱, 없으면 빈 배열 반환
     const usersJSON = localStorage.getItem("users") || "[]";
     try {
       return JSON.parse(usersJSON) as {
@@ -22,19 +21,25 @@ export default function Login() {
         name: string;
       }[];
     } catch {
-      // 파싱 에러가 나면 빈 배열로 처리
       return [];
     }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (id === "team2" && pw === "1234") {
-      login();
-      router.push("/");
-    } else {
-      setError("아이디 또는 비밀번호가 올바르지 않습니다.");
+
+    const users = getUsersFromLocal();
+    const foundUser = users.find((user) => user.id === id);
+    if (!foundUser) {
+      setError("등록되지 않은 아이디입니다.");
+      return;
     }
+    if (foundUser.pw !== pw) {
+      setError("비밀번호가 올바르지 않습니다.");
+      return;
+    }
+    login();
+    router.push("/");
   };
 
   return (
