@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -15,7 +15,12 @@ export default function PhotoSlides({ data }: { data: ImageProps[] }) {
       slidesPerView={1}
       pagination={true}
       navigation={true}
-      modules={[Pagination, Navigation]}
+      modules={[Pagination, Navigation, Autoplay]}
+      loop={true}
+      autoplay={{
+        delay: 2000,
+        disableOnInteraction: false,
+      }}
     >
       {data.map((v) => (
         <SwiperSlide key={v.id}>
