@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function Login() {
