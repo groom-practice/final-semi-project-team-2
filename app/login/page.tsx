@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -10,6 +11,21 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
+
+  const getUsersFromLocal = () => {
+    // 로컬스토리지 'users' 키에 저장된 JSON 문자열을 파싱, 없으면 빈 배열 반환
+    const usersJSON = localStorage.getItem("users") || "[]";
+    try {
+      return JSON.parse(usersJSON) as {
+        id: string;
+        pw: string;
+        name: string;
+      }[];
+    } catch {
+      // 파싱 에러가 나면 빈 배열로 처리
+      return [];
+    }
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +68,15 @@ export default function Login() {
             로그인
           </button>
         </form>
+        <div className="text-center mt-4">
+          <span>계정이 없으신가요? </span>
+          <Link
+            href="/signup"
+            className=" ml-[10px] text-blue-500 hover:underline"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
     </>
   );
