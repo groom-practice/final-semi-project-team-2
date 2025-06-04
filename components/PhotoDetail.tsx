@@ -10,19 +10,20 @@ interface DetailProps{
 
 export default function PhotoDetail({src, alt, photographer}: DetailProps){
   return(
-    <div>
+    <div className="overflow-hidden flex justify-center content-center m-4 p-6 gap-4 bg-white">
       <div>
         <Image 
           src={src}
           alt={alt}
           width={500}
           height={500}
+          className="object-cover rounded-2xl"
            />
       </div>
 
       <div>
-        <span>Photograph by:</span>
-        <h2>{photographer.name}</h2>
+        <span className="text-xs text-gray-600">Photograph by:</span>
+        <h2 className="text-2xl font-bold">{photographer.name}</h2>
       </div>
     </div>
   );
