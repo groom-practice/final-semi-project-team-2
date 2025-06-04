@@ -26,11 +26,12 @@ export default async function Page(){
         <div key={photo.id} className="overflow-hidden hover:scale-105 transition-all rounded-2xl">
           <Link href={`/photos/${photo.id}`}>
             <Image src={photo.download_url}
-              width={500}
-              height={500}
+              width={600}
+              height={600}
               alt={photo.author}
               className="h-full object-cover object-center"
-              placeholder="blur" />
+              placeholder="blur"
+              blurDataURL={photo.download_url} />
           </Link>
         </div>
       ))}
