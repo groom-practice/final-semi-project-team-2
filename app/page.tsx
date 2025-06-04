@@ -1,10 +1,10 @@
 import PhotoSlides from "@/components/PhotoSlides";
-import { allPhotos } from "@/lib/PhotoApi";
+import { getPhotos } from "@/lib/PhotoApi";
 import "swiper/css";
 
 export default async function Home() {
-  const all = await allPhotos();
-  const shuffle = all.sort(() => Math.random() - 0.5);
+  const all = await getPhotos();
+  const shuffle = all.data.sort(() => Math.random() - 0.5);
   const data = shuffle.slice(0, 5);
   console.log(data);
 
