@@ -29,6 +29,9 @@ export default function Header() {
         <Link href={"/"} className="hover:text-slate-500">
           Home
         </Link>
+        <Link href={"/about"} className="hover:text-slate-500">
+          About
+        </Link>
         <Link href={"/photos"} className="hover:text-slate-500">
           Photos
         </Link>
