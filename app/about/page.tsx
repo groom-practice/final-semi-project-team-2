@@ -18,12 +18,12 @@ export default function AboutPage() {
     {
       name: "정세은",
       role: "Photos 페이지 / Photos 상세페이지 / 모달 구현",
-      img: "/images/정다은.png",
+      img: "/images/정세은.png",
     },
     {
       name: "정다정",
       role: "Posts 페이지 / Posts 상세페이지 / 모달 구현",
-      img: "/images/정세은.png",
+      img: "/images/정다정.png",
     },
     {
       name: "맹인영",
