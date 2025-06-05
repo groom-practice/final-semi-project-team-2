@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: ReactNode;
-  modal: ReactNode;
+  modal: React.ReactNode;
 }
 
 const RootLayout: FC<RootLayoutProps> = ({ children, modal }) => {
