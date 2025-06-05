@@ -25,7 +25,9 @@ export default function PhotoSlides({ data }: { data: ImageProps[] }) {
       {data.map((v) => (
         <SwiperSlide key={v.id}>
           <div style={{ height: "80vh" }}>
-            <Link href={`/photos/${v.id}`}>
+            <Link
+              href={{ pathname: `/photos/${v.id}`, query: { from: "home" } }}
+            >
               <Image src={v.download_url} fill alt={v.author} />
             </Link>
           </div>
