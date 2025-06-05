@@ -1,4 +1,5 @@
-import PhotoModalClient from "@/components/PhotoModalClient";
+import Modal from "@/components/Modal";
+import PhotoDetail from "@/components/PhotoDetail";
 import { getPhoto } from "@/lib/PhotoApi";
 import { ImageProps } from "@/types/photos";
 import { notFound } from "next/navigation";
@@ -14,5 +15,16 @@ export default async function PhotoModal({
     notFound();
   }
   const photo = response.data as unknown as ImageProps;
-  return <PhotoModalClient photo={photo} />;
+
+  return (
+    <Modal>
+      <PhotoDetail
+        src={photo.download_url}
+        alt={photo.author}
+        photographer={{
+          name: photo.author,
+        }}
+      />
+    </Modal>
+  );
 }
